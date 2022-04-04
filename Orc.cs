@@ -7,15 +7,15 @@ using GameLibrary.Interfaces;
 
 namespace GameLibrary
 {
-    public class StandardPlayerChar : Creature
+    public class Orc : Creature
     {
-        public StandardPlayerChar(int health, Vector2 pos, string _name) : base(health, pos, _name) // how is this any different from player!?!?
+        public Orc(int health, Vector2 pos, string _name) : base(health, pos, _name) // how is this any different from player!?!?
         {
             RemoveComponent(GetComponent<Weapon>()); // hmmm
-            weapon = new Weapon("Short sword", 2);
-            AddComponent(weapon);
+            weapon = new Weapon("Lumber Axe", 3);
+            AddComponent(new Weapon("Lumber Axe", 3));
         }
-        public StandardPlayerChar(Weapon _weapon, int health, Vector2 pos, string _name) : base(health, pos, _name)
+        public Orc(Weapon _weapon, int health, Vector2 pos, string _name) : base(health, pos, _name)
         {
             RemoveComponent(GetComponent<Weapon>()); // hmmm
             weapon = _weapon;

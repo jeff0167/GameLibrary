@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text;
+using GameLibrary.ConfigExtensions;
 
 namespace GameLibrary
 {
@@ -14,8 +16,9 @@ namespace GameLibrary
         public Vector2 position;
         public List<Component> components; // could we make the sceneworld observe the ctor and add it?
 
-        public GameObject(Vector2 pos, string _name)
+        public GameObject(Vector2 pos, string _name) // I think gameobjects should add listeners when ever it adds a component
         {
+            Tracing.Instance.ts.TraceEvent(TraceEventType.Information, 333, "New gameobject created of type: " + this.GetType().Name);
             name = _name;
             position = pos;
             components = new List<Component>();

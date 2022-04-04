@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameLibrary.Interfaces;
+using GameLibrary.ConfigExtensions;
 
 namespace GameLibrary
 {
@@ -16,7 +18,7 @@ namespace GameLibrary
 
         public Health(int maxHealth = 0) : base("Health")
         {
-            health = MaxHealth = maxHealth;       
+            health = MaxHealth = maxHealth;
             isDead = false;
         }
 
@@ -27,10 +29,12 @@ namespace GameLibrary
         public void ReceiveDamage(int damage)
         {
             if (isDead) return;
-            health-=damage;
+            health -= damage;
 
-            Console.WriteLine("Took damage, have life left: " + health);
-            if(health <= 0)
+            string log = "Took damage, have life left: " + health;
+            Tracing.Instance.ts.TraceEvent(TraceEventType.Information, 333, log);
+            Console.WriteLine(log);
+            if (health <= 0)
             {
                 Death();
             }
@@ -38,7 +42,9 @@ namespace GameLibrary
 
         void Death()
         {
-            Console.WriteLine("Died");
+            string log = this.Name + " died"; // could you somehow get the gameobject that this is attached to!?!?
+            Tracing.Instance.ts.TraceEvent(TraceEventType.Information, 333, log);
+            Console.WriteLine(log);
             isDead = true;
         }
     }

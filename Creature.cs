@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameLibrary.Interfaces;
+using GameLibrary.ConfigExtensions;
 
 namespace GameLibrary
 {
-    public class Creature : GameObject, ILootable, IDamage
+    public abstract class Creature : GameObject, ILootable, IDamage
     {
-        Weapon weapon;
-        Health Health;
+        protected Weapon weapon;
+        protected Health Health;
         public bool IsDead
         {
             get => Health.isDead;
@@ -20,22 +22,36 @@ namespace GameLibrary
         {
             Health = new Health(health);
             components.Add(Health);
-            weapon = new Weapon("Halberd0", 2);
+            weapon = new Weapon("Knuckles", 0);
             components.Add(weapon);
         }
 
-        public void Attack(GameObject target)
+        public void Move(Vector2 addMoveVec) // hmmmmm
         {
-            weapon.DoDamage(target);
+            position += addMoveVec;
+        }
+        public void MoveToPos(Vector2 pos) // hmmmmm
+        {
+            position = pos;
         }
 
         public void DoDamage(GameObject target)
         {
+            if (Health.isDead)
+            {
+                Console.WriteLine("Can't attack while dead");
+                return;
+            }
             weapon.DoDamage(target);
         }
 
         public void DoDamage(Health target)
         {
+            if (Health.isDead)
+            {
+                Console.WriteLine("Can't attack while dead");
+                return;
+            }
             weapon.DoDamage(target);
         }
 
@@ -46,11 +62,19 @@ namespace GameLibrary
                 Console.WriteLine("Cannot loot creature while he is stil kicking");
                 return;
             }
-            Console.WriteLine("Looting: " + weapon.Name);
+
+            string log = "Looting: " + weapon.Name;
+            Tracing.Instance.ts.TraceEvent(TraceEventType.Information, 333, log);
+            Console.WriteLine(log);
             objectThatLoots.AddComponent(weapon);
         }
         public void ReceiveDamage(int damage)
         {
+            if (IsDead)
+            {
+                Console.WriteLine("He is dead, don't beat a dead horse");
+                return;
+            }
             Health.ReceiveDamage(damage);
         }
     }
