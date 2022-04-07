@@ -13,13 +13,7 @@ namespace GameLibrary
         {
             RemoveComponent(GetComponent<Weapon>()); // hmmm
             weapon = new Weapon("Short sword", 2);
-            AddComponent(weapon);
-        }
-        public StandardPlayerChar(Weapon _weapon, int health, Vector2 pos, string _name) : base(health, pos, _name)
-        {
-            RemoveComponent(GetComponent<Weapon>()); // hmmm
-            weapon = _weapon;
-            AddComponent(weapon);
+            LootAndEquipItem(weapon);
         }
     }
 }

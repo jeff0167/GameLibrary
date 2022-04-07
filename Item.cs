@@ -13,9 +13,10 @@ namespace GameLibrary
         {
         }
 
-        public void LootItem(GameObject objectThatLoots)
+        public Item LootItem(GameObject objectThatLoots)
         {
             objectThatLoots.AddComponent(this);
+            return this;
         }
     }
 }

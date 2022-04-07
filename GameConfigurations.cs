@@ -8,12 +8,9 @@ namespace GameLibrary
 {
     public class GameConfigurations
     {
-        static GameConfigurations instance;
-
-        protected GameConfigurations Instance()
+        // some config could be 
+        public GameConfigurations()
         {
-            if(instance == null) instance = new GameConfigurations();
-            return instance;
         }
     }
 }

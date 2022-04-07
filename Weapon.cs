@@ -7,15 +7,18 @@ using GameLibrary.Interfaces;
 
 namespace GameLibrary
 {
-    public class Weapon : Item, IDamage, ILootable
+    public class Weapon : Item, IDamage
     {
+        Random Random = new Random();
+        public float AttackRange;
         protected int Damage { get; set; }
-        public Weapon(string name, int _damage) : base(name)
+        public Weapon(string name, int _damage, float attackRange = 5) : base(name)
         {
             Damage = _damage;
+            AttackRange = attackRange;
         }
 
-        public void DoDamage(Health hp) 
+        public void DoDamage(Health hp)
         {
             DealingDmg(hp);
         }
@@ -28,12 +31,23 @@ namespace GameLibrary
 
         void DealingDmg(Health hp)
         {
+            Console.WriteLine(Observer?.Update().name + " is trying to attack"); // dont get the orc name
             if (hp == null)
             {
                 Console.WriteLine("No health component found");
             }
             else
-                hp.ReceiveDamage(Damage);
+                hp.ReceiveDamage(CritChance());
+        }
+
+        int CritChance()
+        {
+            if (Random.Next(0, 10) == 1)
+            {
+                Console.WriteLine("CRITICAL HIT");
+                return Random.Next(Damage + 1, Damage + 2);
+            }
+            return Damage;
         }
     }
 }

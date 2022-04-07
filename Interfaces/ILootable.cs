@@ -8,6 +8,6 @@ namespace GameLibrary.Interfaces
 {
     public interface ILootable
     {
-        void LootItem(GameObject objectThatLoots);
+        Item LootItem(GameObject objectThatLoots);
     }
 }

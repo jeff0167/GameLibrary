@@ -9,15 +9,18 @@ using GameLibrary.ConfigExtensions;
 
 namespace GameLibrary
 {
-    public class Health : Component, IHitable // now objects that dont really need health but can be hit can also use the same function
+    public class Health : Component, IHealthAndArmor // now objects that dont really need health but can be hit can also use the same function
     {
         public int MaxHealth { get; set; } // should have both lootable and hitable
         public int health { get; set; }
 
-        public bool isDead;
+        public int armor { get; set; }
 
-        public Health(int maxHealth = 0) : base("Health")
+        public bool isDead { get; set; }
+
+        public Health(int maxHealth = 0, IObserver observer = null) : base("Health", observer)
         {
+            armor = 0;
             health = MaxHealth = maxHealth;
             isDead = false;
         }
@@ -26,12 +29,25 @@ namespace GameLibrary
         {
             health = MaxHealth;
         }
+
+        public void AddArmor(int _armor)
+        {
+            Console.WriteLine(armor);
+            armor += _armor;
+
+            Console.WriteLine(Observer.Update().name + " got added armor: " + _armor + " now has total of: " + armor);
+        }
+        public void RemoveArmor(int _armor)
+        {
+            armor -= _armor;
+        }
         public void ReceiveDamage(int damage)
         {
             if (isDead) return;
-            health -= damage;
+            int actualDamage = Math.Clamp(damage - armor, 0, int.MaxValue);
+            health -= actualDamage;
 
-            string log = "Took damage, have life left: " + health;
+            string log = Observer?.Update().name + " Took " + actualDamage + " damage, have " + health + " life left";
             Tracing.Instance.ts.TraceEvent(TraceEventType.Information, 333, log);
             Console.WriteLine(log);
             if (health <= 0)
@@ -42,7 +58,7 @@ namespace GameLibrary
 
         void Death()
         {
-            string log = this.Name + " died"; // could you somehow get the gameobject that this is attached to!?!?
+            string log = Observer?.Update().name + " has died";
             Tracing.Instance.ts.TraceEvent(TraceEventType.Information, 333, log);
             Console.WriteLine(log);
             isDead = true;

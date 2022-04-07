@@ -29,8 +29,8 @@ namespace GameLibrary.ConfigExtensions
             ts.Switch = new SourceSwitch("Game Log", "All");
             
             // setting up listeners
-            TraceListener consoleLog = new ConsoleTraceListener();
-            ts.Listeners.Add(consoleLog);
+            //TraceListener consoleLog = new ConsoleTraceListener();
+            //ts.Listeners.Add(consoleLog);
             var stream = new StreamWriter("TraceDemo.txt"); // autosave
             stream.AutoFlush = true;
             TraceListener fileLog = new TextWriterTraceListener(stream);

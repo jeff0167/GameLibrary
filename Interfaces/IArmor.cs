@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameLibrary.Interfaces
 {
-    public interface IShield 
+    public interface IArmor
     {
-        public int ShieldAmount { get; set; }
+        public int armor { get; set; }
     }
 }

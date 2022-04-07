@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameLibrary.Interfaces
 {
-    public interface IShield 
+    public interface ISubject
     {
-        public int ShieldAmount { get; set; }
+        public void AddObserver(IObserver observer);
     }
 }

@@ -13,13 +13,7 @@ namespace GameLibrary
         {
             RemoveComponent(GetComponent<Weapon>()); // hmmm
             weapon = new Weapon("Lumber Axe", 3);
-            AddComponent(new Weapon("Lumber Axe", 3));
-        }
-        public Orc(Weapon _weapon, int health, Vector2 pos, string _name) : base(health, pos, _name)
-        {
-            RemoveComponent(GetComponent<Weapon>()); // hmmm
-            weapon = _weapon;
-            AddComponent(weapon);
+            LootAndEquipItem(weapon);
         }
     }
 }
