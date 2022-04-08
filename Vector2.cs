@@ -4,6 +4,9 @@ namespace GameLibrary
 {
     public struct Vector2
     {
+        /// <summary>
+        /// Vector2 is used like a direction and as a position
+        /// </summary>
         public float x;
         public float y;
 
@@ -46,7 +49,6 @@ namespace GameLibrary
         {
             return new Vector2(v1.x / divider, v1.y / divider);
         }
-
         public override string ToString()
         {
             return $"X: {x}, Y: {y}";

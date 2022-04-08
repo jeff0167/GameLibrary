@@ -9,6 +9,9 @@ namespace GameLibrary
 {
     public class Shield : Item, IShield
     {
+        /// <summary>
+        /// Shield adds armor and decrease damage taken
+        /// </summary>
         public int ShieldAmount { get; set; }
         public Shield(string name, int shieldAmount) : base(name)
         {

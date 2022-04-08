@@ -8,19 +8,24 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Bobby\\.nuget\\packages\\": {}
+    "C:\\Users\\Bruger\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Bobby\\Desktop\\HomeWork\\AdvancedSoftware\\GameLibrary\\GameLibrary\\GameLibrary.csproj",
+      "projectUniqueName": "C:\\Users\\Bruger\\Desktop\\HomeWork\\4. Semester\\AdvanceSoftwareConstruction\\GameLibrary\\GameLibrary.csproj",
       "projectName": "GameLibrary",
-      "projectPath": "C:\\Users\\Bobby\\Desktop\\HomeWork\\AdvancedSoftware\\GameLibrary\\GameLibrary\\GameLibrary.csproj",
-      "packagesPath": "C:\\Users\\Bobby\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Bobby\\Desktop\\HomeWork\\AdvancedSoftware\\GameLibrary\\GameLibrary\\obj\\",
+      "projectPath": "C:\\Users\\Bruger\\Desktop\\HomeWork\\4. Semester\\AdvanceSoftwareConstruction\\GameLibrary\\GameLibrary.csproj",
+      "packagesPath": "C:\\Users\\Bruger\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Bruger\\Desktop\\HomeWork\\4. Semester\\AdvanceSoftwareConstruction\\GameLibrary\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Bobby\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Bruger\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -60,7 +65,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

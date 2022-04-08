@@ -9,13 +9,14 @@ using GameLibrary.ConfigExtensions;
 
 namespace GameLibrary
 {
-    public class Health : Component, IHealthAndArmor // now objects that dont really need health but can be hit can also use the same function
+    public class Health : Component, IHealthAndArmor 
     {
-        public int MaxHealth { get; set; } // should have both lootable and hitable
+        /// <summary>
+        /// Health has both hitpoints and armor and subracts received damage based upon the amount of armor
+        /// </summary>
+        public int MaxHealth { get; set; }
         public int health { get; set; }
-
         public int armor { get; set; }
-
         public bool isDead { get; set; }
 
         public Health(int maxHealth = 0, IObserver observer = null) : base("Health", observer)
@@ -25,11 +26,17 @@ namespace GameLibrary
             isDead = false;
         }
 
+        /// <summary>
+        /// Sets current health equal to MaxHealth
+        /// </summary>
         public void FullHealth()
         {
             health = MaxHealth;
         }
-
+        /// <summary>
+        /// Adds armor
+        /// </summary>
+        /// <param name="_armor"></param>
         public void AddArmor(int _armor)
         {
             Console.WriteLine(armor);
@@ -37,10 +44,19 @@ namespace GameLibrary
 
             Console.WriteLine(Observer.Update().name + " got added armor: " + _armor + " now has total of: " + armor);
         }
+        /// <summary>
+        /// Removes armor
+        /// </summary>
+        /// <param name="_armor"></param>
         public void RemoveArmor(int _armor)
         {
             armor -= _armor;
         }
+        /// <summary>
+        /// Health receives damage to health
+        /// if health reaches 0 then we call Death()
+        /// </summary>
+        /// <param name="damage"></param>
         public void ReceiveDamage(int damage)
         {
             if (isDead) return;
@@ -55,7 +71,9 @@ namespace GameLibrary
                 Death();
             }
         }
-
+        /// <summary>
+        /// We set isDead to true
+        /// </summary>
         void Death()
         {
             string log = Observer?.Update().name + " has died";

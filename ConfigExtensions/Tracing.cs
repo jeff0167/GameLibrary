@@ -10,7 +10,7 @@ namespace GameLibrary.ConfigExtensions
 {
     public class Tracing
     {
-        public TraceSource ts = new TraceSource("Epic Game");
+        public TraceSource ts; // = "Epiq Game"
         private static Tracing _Instance;
 
         public static Tracing Instance
@@ -24,14 +24,18 @@ namespace GameLibrary.ConfigExtensions
                 return _Instance;
             }
         }
-        public void Setup()
+        public void Setup(string Gamename, string logName, bool DoConsoleLog = false)
         {
-            ts.Switch = new SourceSwitch("Game Log", "All");
-            
+            ts = new TraceSource(Gamename);
+            ts.Switch = new SourceSwitch(logName, "All");
             // setting up listeners
-            //TraceListener consoleLog = new ConsoleTraceListener();
-            //ts.Listeners.Add(consoleLog);
-            var stream = new StreamWriter("TraceDemo.txt"); // autosave
+            if (DoConsoleLog)
+            {
+                Console.WriteLine("Doing console log");
+                TraceListener consoleLog = new ConsoleTraceListener();
+                ts.Listeners.Add(consoleLog);
+            }
+            var stream = new StreamWriter(logName + ".txt"); // autosave
             stream.AutoFlush = true;
             TraceListener fileLog = new TextWriterTraceListener(stream);
             ts.Listeners.Add(fileLog);

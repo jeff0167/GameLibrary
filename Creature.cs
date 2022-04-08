@@ -13,6 +13,12 @@ namespace GameLibrary
 {
     public class Creature : GameObject, ILootable, IDamage
     {
+        /// <summary>
+        /// Creature Inherits from gameobject
+        /// The minimal simple framework for constructing a moving and fighting living being
+        /// Easily extendable to add new features
+        /// Can attack, take damage, equip and loot, and move around
+        /// </summary>
         protected Shield shield;
         protected Weapon weapon;
         protected IHealthAndArmor Health;
@@ -21,15 +27,24 @@ namespace GameLibrary
         {
             get => Health.isDead;
         }
-
-        public Creature(int health, Vector2 pos, string _name) : base(pos, _name)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="health"> A health component</param>
+        /// <param name="pos"> A vector2</param>
+        /// <param name="_name"> A simple name for our creature</param>
+        public Creature(int health, Vector2 pos, string _name) : base(pos, _name) // think I should be able to inject weapons now
         {
             Health = new Health(health, this);
             AddComponent((Component)Health);
             weapon = new Weapon("Knuckles", 1);
             LootAndEquipItem(weapon);
         }
-
+        /// <summary>
+        /// Creature has one weapon only which we asign to and we assign this gameobject to the weapon 
+        /// so the weapon knows who it belongs to
+        /// </summary>
+        /// <param name="_weapon"></param>
         void EquipWeapon(Weapon _weapon)
         {
             weapon = _weapon;
@@ -67,12 +82,21 @@ namespace GameLibrary
             Tracing.Instance.ts.TraceEvent(TraceEventType.Information, 333, log);
             Console.WriteLine(log);
         }
+
+        /// <summary>
+        /// We loot an item, add it as a component and then we equip it
+        /// </summary>
+        /// <param name="item"></param>
         public void LootAndEquipItem(Item item) // Must add component before you can equip it
         {
             AddComponent(item);
             EquipItem(item);
         }
 
+        /// <summary>
+        /// We move by a adding some vector2 to our current pos/vector2
+        /// </summary>
+        /// <param name="addMoveVec"></param>
         public void Move(Vector2 addMoveVec) // hmmmmm
         {
             position += addMoveVec * moveSpeed;
@@ -81,12 +105,18 @@ namespace GameLibrary
         {
             position = pos;
         }
-
+        /// <summary>
+        /// We move directly toward the target
+        /// </summary>
+        /// <param name="target"></param>
         public void MoveTowardTarget(Vector2 target)
-{
+        {
             Move(Vector2.Normalize(target - position)); // the unit vector direction towards the target
         }
-
+        /// <summary>
+        /// We move towards the target until we are in attack range of them
+        /// </summary>
+        /// <param name="target"></param>
         public void MoveUpToTarget(Vector2 target)
         {
             while (!InRange(target))
@@ -96,11 +126,20 @@ namespace GameLibrary
             }
         }
 
+        /// <summary>
+        /// We check if we are in attack range of a target
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public bool InRange(Vector2 target)
         {
             return weapon.AttackRange > Vector2.Distance(position, target);
         }
 
+        /// <summary>
+        /// Deals damage to target going through a gameobject
+        /// </summary>
+        /// <param name="target"></param>
         public void DoDamage(GameObject target)
         {
             if (CanAttack(target))
@@ -108,7 +147,10 @@ namespace GameLibrary
                 weapon.DoDamage(target);
             }
         }
-
+        /// <summary>
+        /// Deals damage to target going through a health component directly to the source
+        /// </summary>
+        /// <param name="target"></param>
         public void DoDamage(Health target)
         {
             if (CanAttack(target.Observer.Update()))
@@ -116,7 +158,11 @@ namespace GameLibrary
                 weapon.DoDamage(target);
             }
         }
-
+        /// <summary>
+        /// We check if we can attack the target
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         bool CanAttack(GameObject target)
         {
             if (Health.isDead)
@@ -131,7 +177,9 @@ namespace GameLibrary
             }
             return true;
         }
-
+        /// <summary>
+        /// Revives creature to max health
+        /// </summary>
         public void Revive()
         {
             string log = this.GetType().Name + " got revived";
@@ -140,7 +188,11 @@ namespace GameLibrary
             Health.FullHealth();
             Health.isDead = false;
         }
-
+        /// <summary>
+        /// Simply loots the weapon of the creature if they are dead
+        /// </summary>
+        /// <param name="objectThatLoots"> We send the gameobject that will be given the component/weapon</param>
+        /// <returns></returns>
         public Item LootItem(GameObject objectThatLoots)
         {
             if (!Health.isDead)
@@ -155,11 +207,37 @@ namespace GameLibrary
             objectThatLoots.AddComponent(weapon);
             return weapon;
         }
+        /// <summary>
+        /// Generates and loots random item
+        /// </summary>
+        /// <param name="objectThatLoots"></param>
+        /// <returns></returns>
+        public Item LootRandomGeneratedItem(GameObject objectThatLoots)
+        {
+            if (!Health.isDead)
+            {
+                Console.WriteLine("Cannot loot creature while he is stil kicking");
+                return null;
+            }
+            IWeaponFactory factory = new Factories.WeaponFactory();
+
+            Item item = (Item)factory.Create(WeaponType.Melee);
+            objectThatLoots.AddComponent(item);
+
+            string log = "Looting: " + item.Name;
+            Tracing.Instance.ts.TraceEvent(TraceEventType.Information, 333, log);
+            Console.WriteLine(log);
+            return item;
+        }
+        /// <summary>
+        /// Creature takes damage to health
+        /// </summary>
+        /// <param name="damage"></param>
         public void ReceiveDamage(int damage)
         {
             if (IsDead)
             {
-                Console.WriteLine("He is dead, don't beat a dead horse");
+                Console.WriteLine("They are dead, don't beat a dead horse");
                 return;
             }
             Health.ReceiveDamage(damage);

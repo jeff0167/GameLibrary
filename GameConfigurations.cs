@@ -8,9 +8,20 @@ namespace GameLibrary
 {
     public class GameConfigurations
     {
-        // some config could be 
+        public string GameName { get; set; }
+        public string LogName { get; set; }
+        public bool DoLog { get; set; }
+        public GameConfigurations(string gameName, string logName, bool doLog = false)
+        {
+            GameName = gameName;
+            LogName = logName;
+            DoLog = doLog;
+        }
         public GameConfigurations()
         {
+            GameName = "Epiq Game";
+            LogName = "Log";
+            DoLog = false;
         }
     }
 }

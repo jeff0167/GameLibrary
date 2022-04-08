@@ -9,6 +9,10 @@ namespace GameLibrary
 {
     public abstract class Item : Component, ILootable
     {
+        /// <summary>
+        /// A item that can be looted and possibly equiped and used
+        /// </summary>
+        /// <param name="name"></param>
         protected Item(string name) : base(name)
         {
         }

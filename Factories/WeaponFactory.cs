@@ -15,7 +15,7 @@ namespace GameLibrary.Factories
             if (type == WeaponType.Ranged) return new Weapon(RandomGenerator.GenerateName(), RandomGenerator.GenerateDmg());
             if (type == WeaponType.Magic) return new Weapon(RandomGenerator.GenerateName(), RandomGenerator.GenerateDmg());
 
-            throw new ArgumentException($"WeaponFactoryMedieval - no class available for weapon type {type}");
+            throw new ArgumentException($"WeaponFactory - no class available for weapon type {type}");
         }
     }
 
@@ -38,7 +38,7 @@ namespace GameLibrary.Factories
         }
         public static int GenerateDmg()
         {
-            int randomChance = random.Next(0, 100);
+            int randomChance = random.Next(0, 20);
             if (randomChance == 1)
             {
                 return random.Next(4, 6);
