@@ -11,7 +11,7 @@ namespace GameLibrary
     {
         Random Random = new Random();
         public float AttackRange;
-        protected int Damage { get; set; }
+        public int Damage; // can't show protected values in tostring   also props with  {get;set;}  don't show up either, needs fix
         public Weapon(string name, int _damage, float attackRange = 5) : base(name)
         {
             Damage = _damage;

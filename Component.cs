@@ -11,7 +11,7 @@ namespace GameLibrary
 {
     public abstract class Component : ISubject
     {
-        public string Name { get; }
+        public string Name; // { get; }
 
         public IObserver Observer;
 
