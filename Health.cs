@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameLibrary.Interfaces;
 using GameLibrary.ConfigExtensions;
+using System.Numerics;
 
 namespace GameLibrary
 {
@@ -80,6 +81,12 @@ namespace GameLibrary
             Tracing.Instance.ts.TraceEvent(TraceEventType.Information, 333, log);
             Console.WriteLine(log);
             isDead = true;
+        }
+
+        public void Heal(int healAmount)
+        {
+            health = Math.Min(health + healAmount, MaxHealth);
+            Console.WriteLine(Observer.Update().name + " healed " + healAmount + " Health and now have " + health + " life points");
         }
     }
 }

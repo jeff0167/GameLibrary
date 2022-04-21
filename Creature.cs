@@ -64,7 +64,9 @@ namespace GameLibrary
 
         public void EquipItem(Item item) // You must only call equip if you already have looted and added the item to your components, only add existing item in inventory, essentionaly 
         {
-            var ItemToEquip = GetComponents().FirstOrDefault(x => x.GetType() == item.GetType() && x.Name == item.Name);
+            var ItemToEquip = GetComponents().FirstOrDefault(x => x.GetType() == item?.GetType() && x.Name == item?.Name);
+
+            string log = "No item found";
 
             if (ItemToEquip != null)
             {
@@ -77,8 +79,8 @@ namespace GameLibrary
                         EquipShield((Shield)item);
                         break;
                 }
+                log = this.name + " equiped: " + item.Name;
             }
-            string log = this.name + " equiped: " + item.Name;
             Tracing.Instance.ts.TraceEvent(TraceEventType.Information, 333, log);
             Console.WriteLine(log);
         }
@@ -177,15 +179,35 @@ namespace GameLibrary
             }
             return true;
         }
+
+        /// <summary>
+        /// returns current health of creature
+        /// </summary>
+        /// <returns></returns>
+        public int GetHealth()
+        {
+            Console.WriteLine(name + " has " + Health.health + " life points");
+            return Health.health;
+        }
+
+        /// <summary>
+        /// Heals the caracter a chosen amount
+        /// </summary>
+        /// <param name="healAmount"></param>
+        public void Heal(int healAmount)
+        {
+            Health.Heal(healAmount);
+        }
+
         /// <summary>
         /// Revives creature to max health
         /// </summary>
         public void Revive()
         {
-            string log = this.GetType().Name + " got revived";
+            Health.FullHealth();
+            string log = this.GetType().Name + " got revived and has " + Health.health + " life points";
             Tracing.Instance.ts.TraceEvent(TraceEventType.Information, 333, log);
             Console.WriteLine(log);
-            Health.FullHealth();
             Health.isDead = false;
         }
         /// <summary>

@@ -19,9 +19,9 @@ namespace GameLibrary.ConfigExtensions
             XmlDocument configDoc = new XmlDocument();
             configDoc.Load(path);
 
-            conf.GameName = GetValue<string>(configDoc,"GameName");
-            conf.LogName = GetValue<string>(configDoc,"LogName");
-            conf.DoLog = GetValue<bool>(configDoc,"DoLog");
+            conf.GameName = GetValue<string>(configDoc, "GameName");
+            conf.LogName = GetValue<string>(configDoc, "LogName");
+            conf.DoLog = GetValue<bool>(configDoc, "DoLog");
 
             return conf;
         }
